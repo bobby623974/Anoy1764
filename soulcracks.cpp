@@ -73,7 +73,7 @@ void handle_sigint(int sig) {
 }
 
 void usage() {
-    std::cout << "Usage: ./bgmi ip port duration threads\n";
+    std::cout << "Usage: ./soul ip port duration threads\n";
     exit(1);
 }
 
