@@ -1,11 +1,8 @@
 workflows:
   run_python_file:
     name: Run Python File Workflow
-    environment:
-      vars:
-        PYTHON_VERSION: "3.9.6" # Optional environment variable for Python version reference
     scripts:
-      # Install Python and dependencies
+      # Update and install dependencies
       - name: Update and install dependencies
         script: |
           #!/bin/bash
@@ -15,21 +12,22 @@ workflows:
       
       # Configure UFW firewall
       - name: Configure UFW firewall
-  script: |
-    #!/bin/bash
-    if command -v ufw >/dev/null 2>&1; then
-      echo "UFW is already installed."
-    else
-      echo "Installing UFW..."
-      sudo apt install -y ufw
-    fi
-    sudo ufw enable
-    sudo ufw allow ssh
-    sudo ufw allow http
-    sudo ufw allow https
-    sudo ufw allow 10000:30000/udp
-    sudo ufw allow 10000:30000/tcp
-    sudo ufw status
+        script: |
+          #!/bin/bash
+          export DEBIAN_FRONTEND=noninteractive
+          if command -v ufw >/dev/null 2>&1; then
+            echo "UFW is already installed."
+          else
+            echo "Installing UFW..."
+            sudo apt install -y ufw
+          fi
+          sudo ufw enable
+          sudo ufw allow ssh
+          sudo ufw allow http
+          sudo ufw allow https
+          sudo ufw allow 10000:30000/udp
+          sudo ufw allow 10000:30000/tcp
+          sudo ufw status
       
       # Configure repository
       - name: Configure Repository
@@ -45,4 +43,4 @@ workflows:
       - name: Run Python script
         script: |
           #!/bin/bash
-          python3 soul.py
+          python3 /bitrise/src/soul.py
