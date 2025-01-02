@@ -6,28 +6,16 @@ workflows:
       - name: Update and install dependencies
         script: |
           #!/bin/bash
-          sudo apt update
-          sudo apt install -y g++ python3 python3-pip
+          brew update
+          brew install g++ python3
+          python3 -m pip install --upgrade pip
           pip3 install pymongo aiohttp TelegramBotAPI telebot
       
-      # Configure UFW firewall
-      - name: Configure UFW firewall
+      # Configure firewall (skip for macOS as ufw is Linux-specific)
+      - name: Configure Firewall (Skipped)
         script: |
           #!/bin/bash
-          export DEBIAN_FRONTEND=noninteractive
-          if command -v ufw >/dev/null 2>&1; then
-            echo "UFW is already installed."
-          else
-            echo "Installing UFW..."
-            sudo apt install -y ufw
-          fi
-          sudo ufw enable
-          sudo ufw allow ssh
-          sudo ufw allow http
-          sudo ufw allow https
-          sudo ufw allow 10000:30000/udp
-          sudo ufw allow 10000:30000/tcp
-          sudo ufw status
+          echo "Firewall configuration skipped for macOS."
       
       # Configure repository
       - name: Configure Repository
@@ -36,11 +24,10 @@ workflows:
           git clone https://github.com/bobby623974/Anoy1764.git
           cd Anoy1764
           g++ -std=c++14 soulcracks.cpp -o soul -pthread
-          mv soul /bitrise/src/soul
-          mv soul.py /bitrise/src/soul.py
       
       # Run Python script
       - name: Run Python script
         script: |
           #!/bin/bash
-          python3 /bitrise/src/soul.py
+          cd Anoy1764
+          python3 soul.py
