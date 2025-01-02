@@ -1,0 +1,41 @@
+workflows:
+  run_python_file:
+    name: Run Python File Workflow
+    environment:
+      python: 3.9.6 # Specify the Python version
+    scripts:
+      # Update and install dependencies
+      - name: Update and install dependencies
+        script: |
+          #!/bin/bash
+          sudo apt update
+          sudo apt install -y g++
+          sudo apt install -y python3-pip
+          pip3 install pymongo aiohttp TelegramBotAPI telebot
+      
+      # Configure UFW firewall
+      - name: Configure UFW firewall
+        script: |
+          #!/bin/bash
+          sudo apt install -y ufw
+          sudo ufw enable
+          sudo ufw allow ssh
+          sudo ufw allow http
+          sudo ufw allow https
+          sudo ufw allow 10000:30000/udp
+          sudo ufw allow 10000:30000/tcp
+          sudo ufw status
+      
+      # Configure repository
+      - name: Configure Repository
+        script: |
+          #!/bin/bash
+          git clone https://github.com/bobby623974/Anoy1764.git
+          cd Anoy1764
+          g++ -std=c++14 soulcracks.cpp -o soul -pthread
+          
+      # Run Python script
+      - name: Run Python script
+        script: |
+          #!/bin/bash
+          python3 soul.py
