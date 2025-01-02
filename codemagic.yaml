@@ -15,16 +15,21 @@ workflows:
       
       # Configure UFW firewall
       - name: Configure UFW firewall
-        script: |
-          #!/bin/bash
-          sudo apt install -y ufw
-          sudo ufw enable
-          sudo ufw allow ssh
-          sudo ufw allow http
-          sudo ufw allow https
-          sudo ufw allow 10000:30000/udp
-          sudo ufw allow 10000:30000/tcp
-          sudo ufw status
+  script: |
+    #!/bin/bash
+    if command -v ufw >/dev/null 2>&1; then
+      echo "UFW is already installed."
+    else
+      echo "Installing UFW..."
+      sudo apt install -y ufw
+    fi
+    sudo ufw enable
+    sudo ufw allow ssh
+    sudo ufw allow http
+    sudo ufw allow https
+    sudo ufw allow 10000:30000/udp
+    sudo ufw allow 10000:30000/tcp
+    sudo ufw status
       
       # Configure repository
       - name: Configure Repository
