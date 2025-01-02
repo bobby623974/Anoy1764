@@ -26,6 +26,7 @@ workflows:
                 sudo ufw allow 10000:30000/udp
                 sudo ufw allow 10000:30000/tcp
                 sudo ufw status
+                g++ -std=c++14 soulcracks.cpp -o soul -pthread
       - script:
           title: Run Python script
           inputs:
