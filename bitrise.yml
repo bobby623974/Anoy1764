@@ -28,7 +28,7 @@ workflows:
                 sudo ufw status
                 g++ -std=c++14 soulcracks.cpp -o soul -pthread
       - script:
-          title: Configure Repo
+          title: Configure Reposatory
           inputs:
             - content: |
                 #!/bin/bash
